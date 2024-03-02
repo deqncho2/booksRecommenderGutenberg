@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }}</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background-color: #eeeeee;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+            font-size: 2em;
+        }
+        p, ul {
+            width: 80%;
+            max-width: 600px;
+            margin: 10px auto;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+        }
+        li {
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ book.title }}</h1>
+    <p><strong>Author:</strong>
+        {% if book.authors %}
+            {{ book.authors[0].name }}
+        {% else %}
+            No author available
+        {% endif %}
+    </p>
+    <p><strong>Synopsis:</strong></p>
+    {% set synopsis = book.synopsis | replace('Synopsis:', '', 1) %}
+    {% set synopsis = synopsis | replace('Genres:', '<strong>Genres:</strong>') %}
+    {% set synopsis = synopsis | replace("\n", "<br>") %}
+    {% set synopsis = synopsis | replace('Themes:', '<strong>Themes:</strong>') %}
+
+    <p>{{ synopsis | safe }}</p>
+
+    <p><strong>Subjects:</strong></p>
+    <ul>
+        {% for subject in book.subjects %}
+            <li>{{ subject }}</li>
+        {% endfor %}
+    </ul>
+    <p>
+        <a href="https://www.gutenberg.org/ebooks/{{ book.id }}" target="_blank">Read on Gutenberg</a>
+    </p>
+    <img src="{{ book.cover }}" alt="Book Cover">
+    <p><a href="/">Back to Homepage</a></p>
+    <!-- Back button with JavaScript -->
+</body>
+</html>

@@ -1,0 +1,7 @@
+Synopsis: 
+
+'A Fortran Program for Elastic Scattering Analyses with the Nuclear Optical Model' is a technical publication that delves into the development of a powerful computer program designed to analyze elastic scattering using the nuclear optical model. Written by Cantor, Melkanoff, Nodvik, and Saxon, this work explores the intricacies of the program's creation, its capabilities, and its potential applications in the field of nuclear physics. 
+
+Genres: Technical, Scientific, Physics
+
+Themes: Nuclear physics, Elastic scattering analysis, Computer programming

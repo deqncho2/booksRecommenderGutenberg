@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Results</title>
+    <!-- Optional: Include CSS or Bootstrap for styling -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+        }
+        .custom-container {
+            max-width: 60%; /* or any percentage or pixel value you want */
+            margin-right: auto;
+            margin-left: auto;
+        }
+        .center-content {
+        text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="custom-container">
+        <h1>Search Results for "{{ query }}"</h1>
+        {% for book in books %}
+            <div class="card mb-3">
+                <div class="row no-gutters">
+                    <div class="col-md-4">
+                        <img src="{{ book.cover }}" class="card-img" alt="{{ book.title }}">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h2>{{ book.title }}</h2>
+                            <p><strong>Author:</strong>
+                                {% if book.authors %}
+                                    {{ book.authors[0].name }}
+                                {% else %}
+                                    No author available
+                                {% endif %}
+                            </p>
+                            <p><strong>Synopsis:</strong></p>
+                            {% set synopsis = book.synopsis | replace('Synopsis:', '', 1) %}
+                            {% set synopsis = synopsis | replace('Genres:', '<strong>Genres:</strong>') %}
+                            {% set synopsis = synopsis | replace("\n", "<br>") %}
+                            {% set synopsis = synopsis | replace('Themes:', '<strong>Themes:</strong>') %}
+
+                            <p>{{ synopsis | safe }}</p>
+
+                            <p><strong>Subjects:</strong></p>
+                            <ul>
+                                {% for subject in book.subjects %}
+                                    <li>{{ subject }}</li>
+                                {% endfor %}
+                            </ul>
+                            <p>
+                                <a href="https://www.gutenberg.org/ebooks/{{ book.id }}" target="_blank">Read on Gutenberg</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <p>No books found for "{{ query }}".</p>
+        {% endfor %}
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if current_page <= 1 %}disabled{% endif %}">
+                    <a class="page-link" href="?query={{ query }}&page=1">First</a>
+                </li>
+                <li class="page-item {% if current_page <= 1 %}disabled{% endif %}">
+                    <a class="page-link" href="?query={{ query }}&page={{ current_page - 1 }}">Previous</a>
+                </li>
+                {% for i in range(current_page - 5 if current_page - 5 > 0 else 1, current_page + 5 if current_page + 5 <= total_pages else total_pages + 1) %}
+                    <li class="page-item {% if i == current_page %}active{% endif %}">
+                        <a class="page-link" href="?query={{ query }}&page={{ i }}">{{ i }}</a>
+                    </li>
+                {% endfor %}
+                <li class="page-item {% if current_page >= total_pages %}disabled{% endif %}">
+                    <a class="page-link" href="?query={{ query }}&page={{ current_page + 1 }}">Next</a>
+                </li>
+                <li class="page-item {% if current_page >= total_pages %}disabled{% endif %}">
+                    <a class="page-link" href="?query={{ query }}&page={{ total_pages }}">Last</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div class="center-content">
+        <p><a href="/">Back to Homepage</a></p>
+    </div>
+</body>
+</html>

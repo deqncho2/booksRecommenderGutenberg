@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Starting With {{ letter }}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+        }
+        .alphabet-navigation, .pagination {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .alphabet-navigation a, .pagination a {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+            padding: 2px 5px; /* Added for better clickability */
+        }
+        .books-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: flex-end; /* Aligns items along the bottom */
+            gap: 10px;
+            padding: 10px;
+        }
+        .book {
+            width: calc(10% - 20px); /* Adjust width for 10 items per row with padding */
+            margin-bottom: 20px;
+            background-color: #fff;
+            padding: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .book img {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+        }
+        .book-title {
+            display: block; /* Makes the span a block element to fill the width */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%; /* Sets the title width to match the image width */
+            text-align: center;
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #333;
+        }
+        .margin-adjust {
+        margin-left: 46%; /* Adjust percentage as needed */
+        margin-bottom: 20px; /* Adjust the value as needed */
+        }
+        .center-content {
+        text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="alphabet-navigation">
+        {% for l in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' %}
+            <a href="{{ url_for('books_by_letter', letter=l) }}">{{ l }}</a>
+        {% endfor %}
+    </div>
+    <div class="books-grid">
+        {% for book in books %}
+            <div class="book">
+                <a href="/book/{{ book.id }}" target="_blank">
+                    <img src="{{ url_for('static', filename='covers/' + book.id + '.jpg') }}" alt="{{ book.title }}">
+                    <span class="book-title" title="{{ book.title }}">{{ book.title }}</span>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    <div class="pagination">
+        {% for i in range(1, total_pages + 1) %}
+            <a href="{{ url_for('books_by_letter', letter=letter, page=i) }}">{{ i }}</a>
+        {% endfor %}
+    </div>
+    <div class="center-content">
+        <p><a href="/">Back to Homepage</a></p>
+    </div>
+</body>
+</html>
