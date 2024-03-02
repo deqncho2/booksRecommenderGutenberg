@@ -26,7 +26,7 @@
             <div class="card mb-3">
                 <div class="row no-gutters">
                     <div class="col-md-4">
-                        <img src="{{ book.cover }}" class="card-img" alt="{{ book.title }}">
+                        <img src="{{ url_for('static', filename='covers/' + book.id|string + '.jpg') }}" class="card-img" alt="{{ book.title }}">
                     </div>
                     <div class="col-md-8">
                         <div class="card-body">

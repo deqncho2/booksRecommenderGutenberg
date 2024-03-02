@@ -174,8 +174,7 @@ def search_by_query_results():
                                    input_type=input_type_query).embeddings
 
             # Retrieve the nearest neighbors
-            similar_item_ids = search_index.get_nns_by_vector(query_embed[0], 100,
-                                                              include_distances=True)
+            similar_item_ids = search_index.get_nns_by_vector(query_embed[0], 100, include_distances=True)
             # Format the results
             # query_results = pd.DataFrame(data={'label': books_descriptions.iloc[similar_item_ids[0]]['text'],
             #                                    'distance': similar_item_ids[1]})
@@ -201,4 +200,4 @@ def search_by_query_results():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=8000)

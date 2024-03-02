@@ -59,7 +59,7 @@
     <p>
         <a href="https://www.gutenberg.org/ebooks/{{ book.id }}" target="_blank">Read on Gutenberg</a>
     </p>
-    <img src="{{ book.cover }}" alt="Book Cover">
+    <img src="{{ url_for('static', filename='covers/' + book.id|string + '.jpg') }}" alt="Book Cover">
     <p><a href="/">Back to Homepage</a></p>
     <!-- Back button with JavaScript -->
 </body>
